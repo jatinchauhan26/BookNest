@@ -1,3 +1,4 @@
+
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -6,28 +7,27 @@ import cors from "cors";
 import bookRoute from "./route/book.route.js";
 import userRoute from "./route/user.route.js";
 
+dotenv.config();
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-dotenv.config();
-
 const PORT = process.env.PORT || 4000;
 const URI = process.env.MongoDBURI;
 
-// connect to mongoDB
-try {
-    mongoose.connect(URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+// Connect to MongoDB
+mongoose
+    .connect(URI)
+    .then(() => {
+        console.log("Connected to MongoDB");
+    })
+    .catch((error) => {
+        console.error("MongoDB connection error:", error.message);
     });
-    console.log("Connected to mongoDB");
-} catch (error) {
-    console.log("Error: ", error);
-}
 
-// defining routes
+// Define routes
 app.use("/book", bookRoute);
 app.use("/user", userRoute);
 
