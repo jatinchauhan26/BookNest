@@ -24,7 +24,7 @@ function Signup() {
     };
 
     await axios
-      .post("http://localhost:4001/user/signup", userInfo)
+      .post("https://booknest-12a0.onrender.com/user/signup", userInfo)
       .then((res) => {
         console.log(res.data);
 
